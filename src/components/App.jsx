@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Searchbar } from './searchbar/Searchbar';
 import { ImageGallery } from './imageGallery/ImageGallery';
 import { Modal } from './modal/Modal';
+
 export class App extends Component {
   state = {
     searchParam: '',

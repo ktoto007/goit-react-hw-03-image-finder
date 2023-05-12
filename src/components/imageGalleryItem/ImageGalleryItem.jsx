@@ -1,10 +1,14 @@
 import propTypes from 'prop-types';
+import {
+  ImageGalleryItemStyled,
+  ImageGalleryItemImage,
+} from './ImageGalleryItem.styled';
 
 export const ImageGalleryItem = ({ bigUrl, smallUrl, alt }) => {
   return (
-    <li className="ImageGalleryItem">
-      <img src={smallUrl} alt={alt} id={bigUrl} />
-    </li>
+    <ImageGalleryItemStyled>
+      <ImageGalleryItemImage src={smallUrl} alt={alt} id={bigUrl} />
+    </ImageGalleryItemStyled>
   );
 };
 

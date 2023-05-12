@@ -4,7 +4,7 @@ import { getImages } from 'services/finder-api';
 import { ImageGalleryItem } from 'components/imageGalleryItem/ImageGalleryItem';
 import { Button } from 'components/button/Button';
 import { Loader } from 'components/loader/Loader';
-
+import { ImageGalleryStyled } from 'components/imageGallery/ImageGallery.styled';
 export class ImageGallery extends Component {
   state = {
     images: [],
@@ -19,15 +19,20 @@ export class ImageGallery extends Component {
 
     if (prevSearch !== nextSearch || prevPage !== nextPage) {
       this.setState({ visible: true });
-      const images = await getImages(nextSearch, nextPage);
+      try {
+        const images = await getImages(nextSearch, nextPage);
 
-      if (nextPage === 1) {
-        this.setState({ images: images.hits });
-      } else {
-        this.setState(prevProps => ({
-          images: [...prevProps.images, ...images.hits],
-        }));
+        if (nextPage === 1) {
+          this.setState({ images: images.hits });
+        } else {
+          this.setState(prevProps => ({
+            images: [...prevProps.images, ...images.hits],
+          }));
+        }
+      } catch (error) {
+        console.log(error);
       }
+
       this.setState({ visible: false });
     }
   };
@@ -43,7 +48,7 @@ export class ImageGallery extends Component {
 
     return (
       <>
-        <ul className="ImageGallery" onClick={this.openModal}>
+        <ImageGalleryStyled onClick={this.openModal}>
           {visible && <Loader />}
           {images.map(({ id, webformatURL, largeImageURL, tags }) => {
             return (
@@ -55,7 +60,7 @@ export class ImageGallery extends Component {
               ></ImageGalleryItem>
             );
           })}
-        </ul>
+        </ImageGalleryStyled>
         {images.length > 0 && <Button type="button" onClick={onClick}></Button>}
       </>
     );
